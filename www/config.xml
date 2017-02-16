@@ -51,6 +51,10 @@
     <plugin name="cordova-plugin-insomnia" />
     <plugin name="cordova-plugin-screen-orientation" />
 
+    <plugin name="cordova-plugin-ble-central">
+        <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Scan for Bluetooth Low Energy Peripherals" />
+    </plugin>
+
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 	<!-- <plugin spec="https://github.com/manueldeveloper/cordova-plugin-volume-buttons.git" source="git" /> -->

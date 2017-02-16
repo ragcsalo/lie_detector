@@ -90,6 +90,7 @@
     var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
     var valasztott_nyelv, ertekelte, account_saved=0;
     var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, pebblevel, kileng_kesik=3, folyamat;
+    var kapcsidozito;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -211,9 +212,27 @@
       $(".subscribed").show();
 
       $('body').fadeIn();
+
+      bt_keres();
+
     }
 
+
     
+    function bt_keres() {
+      ble.startScan([], function(device) {
+          alert(device.name+'\n'+device.id);
+      }, hiba);
+      kapcsidozito = setTimeout(bt_nemkeres,60000);
+    }
+
+    function bt_nemkeres() {
+      clearTimeout(kapcsidozito);
+      ble.stopScan(siker,hiba);
+    }
+
+
+
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
 
     function nyelvSiker(nyelv) {
