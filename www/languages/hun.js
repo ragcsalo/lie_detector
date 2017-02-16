@@ -3,7 +3,8 @@ txt_cime = 'HAZUGSÁG-VIZSGÁLÓ';
 txt_hazug = 'HAZUG';
 txt_igaz = 'IGAZ';
 txt_kovetk = 'Következő válasz';
-txt_kilepes = 'Nyomd meg 3-szor a VISSZA gombot a kilépéshez!';
+
+txt_kilepes = 'Húzd FELFELÉ 2 ujjadat 3-szor a kijelzőn a kilépéshez!';
 txt_kilep = 'Ha ki szeretnél lépni';
 txt_ujra = 'Máskor is mutasd';
 txt_megertette = 'OK, megértettem';
@@ -38,17 +39,15 @@ txt_devmsg = 'Benke Smith üzenete';
 txt_menu1 = 'Nyitólap';
 txt_menu2 = 'Kézikönyv';
 txt_menu21 = 'A titkos módszer';
-txt_menu22 = 'A Hazugságvizsgáló használata';
+txt_menu22 = 'A Hazugságvizsgáló';
 txt_menu23 = 'Alap mutatvány kártyákkal';
 txt_menu24 = 'A képernyő beállítása';
-txt_menu26 = 'Források, köszönetnyilvánítás';
+txt_menu26 = 'Források, köszönet';
 txt_menu27 = 'Alap beállítások';
 txt_menu28 = 'PROFI beállítások';
 txt_menu5 = 'Beállítások';
 txt_setacc = 'Fiók beállítása';
 txt_newacc = 'Másik fiók választása';
-
-txt_myapps = '<b>bűvésztrükkjeim a Google Play-en</b>';
 
 txt_ujset = 'Beállítások módosítva';
 txt_ujzoom = 'A nagyítási szorzó:';

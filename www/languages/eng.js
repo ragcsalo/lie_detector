@@ -3,7 +3,8 @@ txt_cime = 'LIE DETECTOR';
 txt_hazug = 'LIE';
 txt_igaz = 'TRUE';
 txt_kovetk = 'Next answer';
-txt_kilepes = 'Touch BACK button 3 times to exit!';
+
+txt_kilepes = 'Swipe UP 3 times with 2 fingers to exit!';
 txt_kilep = 'If you want to exit';
 txt_ujra = 'Show again next time';
 txt_megertette = 'OK, I got it';
@@ -47,8 +48,6 @@ txt_menu28 = 'PRO settings';
 txt_menu5 = 'Settings';
 txt_setacc = 'Account settings';
 txt_newacc = 'Change account';
-
-txt_myapps = '<b>my magic apps on Google Play</b>';
 
 txt_ujset = 'Settings changed';
 txt_ujzoom = 'Zoom reset to';
