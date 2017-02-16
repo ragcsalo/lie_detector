@@ -79,8 +79,6 @@
       function onDeviceReady() {
         screen.lockOrientation('portrait');
 
-        window.addEventListener("volumebuttonslistener", function (e) {e.preventDefault(); valtas();}, false);
-
         document.addEventListener("enterbutton", function (e) {e.preventDefault(); valtas();}, false);  
         document.addEventListener("keypress", function (e) {e.preventDefault(); valtas();}, false);  
 
@@ -272,11 +270,12 @@
 
 
       function ujgiroszkop_figyel() {
+
         window.addEventListener('devicemotion', function(event) {
           var ax = Math.round(event.accelerationIncludingGravity.x);
           var ay = Math.round(event.accelerationIncludingGravity.y);
           var az = Math.round(event.accelerationIncludingGravity.z);
-          //$("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+','+megallitva);
+          $("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+','+megallitva);
 
           if (kartyalesz && !felforditva) {
             if (az>4) {
