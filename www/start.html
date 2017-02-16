@@ -275,7 +275,7 @@
           var ax = Math.round(event.accelerationIncludingGravity.x);
           var ay = Math.round(event.accelerationIncludingGravity.y);
           var az = Math.round(event.accelerationIncludingGravity.z);
-          $("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+','+megallitva);
+          $("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
 
           if (kartyalesz && !felforditva) {
             if (az>4) {
@@ -298,14 +298,11 @@
           }
 
           if (dontes && !fordul && !felforditva) {
-            if (!megdontve && Math.abs(ax)>4 && az<9) {
+            if (!megdontve && Math.abs(ax)>=4) {
               megdontve=true;
             }
-            else if (megdontve && Math.abs(ax)<2 && az>9) {
+            else if (megdontve && Math.abs(ax)<2) {
               megdontve=false;
-              if (vibraljon) {
-                navigator.vibrate(30);
-              }
               valtas();
             }
           }
@@ -317,9 +314,6 @@
         if (fordul) {
           if (!megallitva) {
             leforditva = true;
-            if (vibraljon) {
-              navigator.vibrate(30);
-            }
           }
           else {
             leforditva = false;
@@ -454,7 +448,7 @@
           $("#zenegep")[0].play();
         }
         if (vibraljon) {
-          navigator.vibrate(2000);
+          navigator.vibrate(3000);
         }
       }
 
