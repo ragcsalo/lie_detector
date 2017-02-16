@@ -78,8 +78,9 @@
 
       function onDeviceReady() {
         screen.lockOrientation('portrait');
-        document.addEventListener("volumeupbutton", function (e) {e.preventDefault(); valtas();}, false);  
-        document.addEventListener("volumedownbutton", function (e) {e.preventDefault(); valtas();}, false);  
+
+        window.addEventListener("volumebuttonslistener", function (e) {e.preventDefault(); valtas();}, false);
+
         document.addEventListener("enterbutton", function (e) {e.preventDefault(); valtas();}, false);  
         document.addEventListener("keypress", function (e) {e.preventDefault(); valtas();}, false);  
 

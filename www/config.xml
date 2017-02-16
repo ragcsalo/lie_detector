@@ -53,7 +53,7 @@
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
-	<!-- <plugin spec="https://github.com/tgardner/cordova-pebble.git" source="git" /> -->
+	<plugin spec="https://github.com/manueldeveloper/cordova-plugin-volume-buttons.git" source="git" />
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
