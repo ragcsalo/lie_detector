@@ -72,6 +72,7 @@
       var kartya_szin="", kartya_ertek="", pixelek=5, pixelpos='bottom left';
       var igazhang='', hazughang='', vibraljon=false, hangerogomb=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
       var dontozito;
+      var effect_yes, effect_no;
 
       var valasztott_nyelv, hogylephetki, kilep_szamol=0;
 
@@ -200,8 +201,10 @@
         
         ujgiroszkop_figyel();
 
-        var effect_yes = new Media("sounds/effect_yes.mp3");
-        var effect_no = new Media("sounds/effect_no.mp3");
+        effect_yes = new Media("sounds/effect_yes.mp3");
+        effect_no = new Media("sounds/effect_no.mp3");
+
+        navigator.vibrate(1000);
 
       }
 
