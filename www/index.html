@@ -220,15 +220,20 @@
 
     
     function bt_keres() {
+    alert('BT keres');
+    alert(ble);
       ble.startScan([], function(device) {
           alert(device.name+'\n'+device.id);
-      }, hiba);
-      kapcsidozito = setTimeout(bt_nemkeres,60000);
+      }, function() {
+          alert('startScan HIBA');
+      });
+      kapcsidozito = setTimeout(bt_nemkeres,20000);
     }
 
     function bt_nemkeres() {
       clearTimeout(kapcsidozito);
       ble.stopScan(siker,hiba);
+      alert('BT nemkeres');
     }
 
 
