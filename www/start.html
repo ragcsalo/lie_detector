@@ -71,8 +71,8 @@
       var leforditva=false, felforditva=false, fej_megjelenve=false;
       var kartya_szin="", kartya_ertek="", pixelek=5, pixelpos='bottom left';
       var igazhang='', hazughang='', vibraljon=false, hangerogomb=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
-      var dontozito;
-      var effect_yes, effect_no;
+      var dontozito, fejzito, cimzito;
+      var effect_yes, effect_no, sound_yes, sound_no, voice_yes, voice_no;
 
       var valasztott_nyelv, hogylephetki, kilep_szamol=0;
 
@@ -203,8 +203,10 @@
 
         effect_yes = new Media("sounds/effect_yes.mp3");
         effect_no = new Media("sounds/effect_no.mp3");
-
-        navigator.vibrate(1000);
+        sound_yes = new Media("sounds/sound_yes.mp3");
+        sound_no = new Media("sounds/sound_no.mp3");
+        voice_yes = new Media("sounds/voice_yes.mp3");
+        voice_no = new Media("sounds/voice_no.mp3");
 
       }
 
@@ -414,7 +416,6 @@
         aktualis = igaz;
         arrow.setValue(aktualis);
         kilengett = true;
-        //setTimeout(igaz_fej,1000);
         igaz_fej();
       }
 
@@ -426,38 +427,43 @@
         aktualis = hamis;
         arrow.setValue(aktualis);
         kilengett = true;
-        //setTimeout(hazug_fej,1000);
         hazug_fej();
       }
 
 
       function igaz_fej() {
+        var hangja;
         if (smileyt) {
           fej_megjelenve=true;
           $('#felirat').fadeOut(500);
           $('#smiley_igaz').fadeIn(1000);
-          setTimeout(fej_eltunik,3500);
+          fejzito = setTimeout(fej_eltunik,3500);
         }
         if (igazhang!='') {
-          effect_yes.play();
+          hangja = window[igazhang];
+          hangja.play();
         }
       }
+
       function hazug_fej() {
+        var hangja;
         if (smileyt) {
           fej_megjelenve=true;
           $('#felirat').fadeOut(500);
           $('#smiley_hazug').fadeIn(1000);
-          setTimeout(fej_eltunik,3500);
+          fejzito = setTimeout(fej_eltunik,3500);
         }
         if (hazughang!='') {
-          effect_no.play();
+          hangja = window[hazughang];
+          hangja.play();
         }
-        //if (vibraljon) {
-        navigator.vibrate(3000);
-        //}
+        if (vibraljon) {
+          navigator.vibrate(1000);
+        }
       }
 
       function fej_eltunik() {
+        clearTimeout(fejzito);
         if (smileyt) {
           fej_megjelenve=false;
           $('#felirat').fadeIn(500);
@@ -525,7 +531,10 @@
 
      
       function erintette() {
-        fej_eltunik();
+        clearTimeout(fejzito);
+        fej_megjelenve=false;
+        $('#smiley_igaz').hide();
+        $('#smiley_hazug').hide();
         mozog();
         kilenghet = true;
         if (folyamat) {
@@ -545,6 +554,7 @@
           kesleltet = setTimeout(kileng,kileng_kesik*1000+500);
         }
         else {
+          $('#felirat').show();
           kesleltet = setTimeout(kileng,kileng_kesik*1000);
         }
       }

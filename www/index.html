@@ -165,6 +165,12 @@
         storage.setItem("kartyalesz",false);
       }
 
+      vibraljon = logikai(storage.getItem("vibraljon"));
+      if (!vibraljon) {
+        vibraljon=false;
+        storage.setItem("vibraljon",false);
+      }
+
       igazhang = storage.getItem("igazhang");
       if (igazhang==null) {
         igazhang='';
@@ -418,6 +424,9 @@
       if (kartyalesz) {
         $("#kartyalesz").addClass('active');
       }
+      if (vibraljon) {
+        $("#vibraljon").addClass('active');
+      }
       if (smileyt) {
         $("#smileyt").addClass('active');
       }
@@ -476,6 +485,16 @@
       storage.setItem("folyamat",folyamat);
     }
 
+    function vibraljon_kapcs() {
+      if (vibraljon) {
+        vibraljon=false;
+      }
+      else {
+        vibraljon=true;
+      }
+      storage.setItem("vibraljon",vibraljon);
+    }
+
     function smileyt_kapcs() {
       if (smileyt) {
         smileyt=false;
@@ -508,6 +527,10 @@
       if (window.DeviceMotionEvent) {
         if (dontes) {
           dontes=false;
+          csakigaz=false;
+          storage.setItem("csakigaz",csakigaz);
+          $("#csakigaz").removeClass('active');
+          document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
         }
         else {
           dontes=true;
@@ -1019,6 +1042,14 @@
                 <option value="sound_no" id="txt_no_effect2">Effect #2</option>
                 <option value="voice_no" id="txt_no_voice">Voice (NO)</option>
               </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_vibraljon">Vibrate on LIE</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="vibraljon" onTouchstart="vibraljon_kapcs()">
+                <div class="toggle-handle"></div>
+              </div>
             </td>
           </tr>
           <tr>
