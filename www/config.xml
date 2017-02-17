@@ -49,11 +49,12 @@
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-insomnia" />
+    <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-screen-orientation" />
 
-    <plugin name="cordova-plugin-ble-central">
+    <!-- <plugin name="cordova-plugin-ble-central">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Scan for Bluetooth Low Energy Peripherals" />
-    </plugin>
+    </plugin> -->
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->

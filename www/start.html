@@ -71,6 +71,7 @@
       var leforditva=false, felforditva=false, fej_megjelenve=false;
       var kartya_szin="", kartya_ertek="", pixelek=5, pixelpos='bottom left';
       var igazhang='', hazughang='', vibraljon=false, hangerogomb=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
+      var dontozito;
 
       var valasztott_nyelv, hogylephetki, kilep_szamol=0;
 
@@ -199,6 +200,9 @@
         
         ujgiroszkop_figyel();
 
+        var effect_yes = new Media("sounds/effect_yes.mp3");
+        var effect_no = new Media("sounds/effect_no.mp3");
+
       }
 
       function set_language(mire) {
@@ -275,7 +279,7 @@
           var ax = Math.round(event.accelerationIncludingGravity.x);
           var ay = Math.round(event.accelerationIncludingGravity.y);
           var az = Math.round(event.accelerationIncludingGravity.z);
-          $("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
+          //$("#txt_cime").html(ax+', '+ay+', '+az+'<br>'+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
 
           if (kartyalesz && !felforditva) {
             if (az>4) {
@@ -432,8 +436,7 @@
           setTimeout(fej_eltunik,3500);
         }
         if (igazhang!='') {
-          document.getElementById('zenegep').src = 'sounds/'+igazhang+'.mp3';
-          $("#zenegep")[0].play();
+          effect_yes.play();
         }
       }
       function hazug_fej() {
@@ -444,12 +447,11 @@
           setTimeout(fej_eltunik,3500);
         }
         if (hazughang!='') {
-          document.getElementById('zenegep').src = 'sounds/'+hazughang+'.mp3';
-          $("#zenegep")[0].play();
+          effect_no.play();
         }
-        if (vibraljon) {
-          navigator.vibrate(3000);
-        }
+        //if (vibraljon) {
+        navigator.vibrate(3000);
+        //}
       }
 
       function fej_eltunik() {
@@ -639,7 +641,7 @@
       </div>
 
       <div class="noselect" style="position:absolute; bottom:10px; width:100%; text-align:center; font-size:30pt; text-align:center; font-family:betutipus">
-        <div id="szazalek" style="display:none; position:relative; top:0px; width:100px; margin-left:auto; margin-right:auto; text-align:center; margin-bottom:0px; font-size:17pt;"><strong style="position:relative; top:-50px"></strong></div>
+        <div id="szazalek" style="display:none; position:relative; top:0px; width:100px; margin-left:auto; margin-right:auto; text-align:center; margin-bottom:0px; font-size:17pt;"><strong style="position:relative; top:-70px"></strong></div>
         <img src="img/fingerprint.png" style="height:100px" border="0" alt="" onTouchstart="erintette()" onTouchend="elvette()">
       </div>
 

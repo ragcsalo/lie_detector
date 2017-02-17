@@ -90,7 +90,6 @@
     var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
     var valasztott_nyelv, ertekelte, account_saved=0;
     var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, pebblevel, kileng_kesik=3, folyamat;
-    var kapcsidozito;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -130,12 +129,6 @@
         storage.setItem("csakigaz",false);
       }
 
-      hangerogomb = logikai(storage.getItem("hangerogomb"));
-      if (!hangerogomb) {
-        hangerogomb=false;
-        storage.setItem("hangerogomb",false);
-      }
-
       dontes = logikai(storage.getItem("dontes"));
       if (!dontes) {
         dontes=false;
@@ -170,12 +163,6 @@
       if (!kartyalesz) {
         kartyalesz=false;
         storage.setItem("kartyalesz",false);
-      }
-
-      vibraljon = logikai(storage.getItem("vibraljon"));
-      if (!vibraljon) {
-        vibraljon=false;
-        storage.setItem("vibraljon",false);
       }
 
       igazhang = storage.getItem("igazhang");
@@ -213,29 +200,7 @@
 
       $('body').fadeIn();
 
-      bt_keres();
-
     }
-
-
-    
-    function bt_keres() {
-    alert('BT keres');
-    alert(ble);
-      ble.startScan([], function(device) {
-          alert(device.name+'\n'+device.id);
-      }, function() {
-          alert('startScan HIBA');
-      });
-      kapcsidozito = setTimeout(bt_nemkeres,20000);
-    }
-
-    function bt_nemkeres() {
-      clearTimeout(kapcsidozito);
-      ble.stopScan(siker,hiba);
-      alert('BT nemkeres');
-    }
-
 
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
@@ -444,9 +409,6 @@
       if (autostart) {
         $("#autostart").addClass('active');
       }
-      if (hangerogomb) {
-        $("#hangerogomb").addClass('active');
-      }
       if (dontes) {
         $("#dontes").addClass('active');
       }
@@ -455,9 +417,6 @@
       }
       if (kartyalesz) {
         $("#kartyalesz").addClass('active');
-      }
-      if (vibraljon) {
-        $("#vibraljon").addClass('active');
       }
       if (smileyt) {
         $("#smileyt").addClass('active');
@@ -517,16 +476,6 @@
       storage.setItem("folyamat",folyamat);
     }
 
-    function vibraljon_kapcs() {
-      if (vibraljon) {
-        vibraljon=false;
-      }
-      else {
-        vibraljon=true;
-      }
-      storage.setItem("vibraljon",vibraljon);
-    }
-
     function smileyt_kapcs() {
       if (smileyt) {
         smileyt=false;
@@ -555,21 +504,6 @@
       storage.setItem("kartyalesz",kartyalesz);
     }
 
-    function hangerogomb_kapcs() {
-      if (hangerogomb) {
-        hangerogomb=false;
-      }
-      else {
-        hangerogomb=true;
-      }
-      if (csakigaz) {
-        hangerogomb=true;
-        $("#hangerogomb").addClass('active');
-        document.getElementById('hanggomb').style.webkitTransform = 'translate3d(44px,0,0)';
-      }
-      storage.setItem("hangerogomb",hangerogomb);
-    }
-
     function dontes_kapcs() {
       if (window.DeviceMotionEvent) {
         if (dontes) {
@@ -581,6 +515,10 @@
       }
       else {
         dontes=false;
+        csakigaz=false;
+        storage.setItem("csakigaz",csakigaz);
+        $("#csakigaz").removeClass('active');
+        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
         $("#dontes").removeClass('active');
         document.getElementById('dontgomb').style.webkitTransform = 'translate3d(0,0,0)';
         uzenet_ablak(txt_motion1,txt_motion2);
@@ -594,10 +532,10 @@
       }
       else {
         csakigaz=true;
-        hangerogomb=true;
-        $("#hangerogomb").addClass('active');
-        document.getElementById('hanggomb').style.webkitTransform = 'translate3d(44px,0,0)';
-        storage.setItem("hangerogomb",hangerogomb);
+        dontes=true;
+        $("#dontes").addClass('active');
+        document.getElementById('dontgomb').style.webkitTransform = 'translate3d(44px,0,0)';
+        storage.setItem("dontes",dontes);
       }
       storage.setItem("csakigaz",csakigaz);
     }
@@ -1084,14 +1022,6 @@
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_vibraljon">Vibrate on LIE</td>
-            <td class="jobb" align="right">
-              <div class="toggle pull-right" id="vibraljon" onTouchstart="vibraljon_kapcs()">
-                <div class="toggle-handle"></div>
-              </div>
-            </td>
-          </tr>
-          <tr>
             <td class="bal" id="txt_smileyt">Show smiley faces</td>
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="smileyt" onTouchstart="smileyt_kapcs()">
@@ -1110,14 +1040,6 @@
 
         <table style="width:100%; margin-right:10px">
           <tr>
-            <td class="bal" id="txt_hangerogomb">Switch with volume buttons</td>
-            <td class="jobb" align="right">
-              <div class="toggle pull-right" id="hangerogomb" onTouchstart="hangerogomb_kapcs()">
-                <div class="toggle-handle" id="hanggomb"></div>
-              </div>
-            </td>
-          </tr>
-          <tr>
             <td class="bal" id="txt_dontes">Tilt device to switch</td>
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="dontes" onTouchstart="dontes_kapcs()">
@@ -1129,7 +1051,7 @@
             <td class="bal" id="txt_csakigaz">Always TRUE by default</td>
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="csakigaz" onTouchstart="csakigaz_kapcs()">
-                <div class="toggle-handle"></div>
+                <div class="toggle-handle" id="igazgomb"></div>
               </div>
             </td>
           </tr>
