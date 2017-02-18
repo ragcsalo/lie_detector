@@ -206,7 +206,17 @@
 
       $('body').fadeIn();
 
-    }
+      alert(Pebble);
+
+      Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
+        function() {
+          Pebble.launchApp(
+            function() { alert('elindult'); },
+            function(event) { alert('nem indul'); }
+          );
+        },
+        function(event) { alert('Pebble HIBA'); });
+      }
 
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
