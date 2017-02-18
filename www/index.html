@@ -212,9 +212,8 @@
             //alert(event.name+' connected,\nstarting app...');
             Pebble.launchApp(siker,hiba);
             Pebble.onAppMessageReceived(function(message){
-              if (message.1) {
-                alert('1');
-              }
+              var uzi = kulcsok(message)[0];
+              alert('message from '+message.watch+':\n\n'+uzi);
             });
           });
         },
@@ -226,7 +225,7 @@
 
 
     function kuld() {
-      Pebble.sendAppMessage({0: "hello"},siker);
+      Pebble.sendAppMessage({0: "Hello! :-)"},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
