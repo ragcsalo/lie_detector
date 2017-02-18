@@ -219,8 +219,13 @@
               Pebble.launchApp(function() {
                 //alert('App started');
                 Pebble.onAppMessageReceived(function(message){
-                  //alert(kulcsok(message));
-                  valtas();
+                  var uzije=kulcsok(message)[0];
+                  if (uzije!='1' && uzije!='2') {
+                    alert(uzije);
+                  }
+                  else {
+                    valtas();
+                  }
                 });
               } ,hiba);
             });
