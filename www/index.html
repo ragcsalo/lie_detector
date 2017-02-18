@@ -209,18 +209,18 @@
 
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
-          Pebble.launchApp();
+          Pebble.launchApp(siker,hiba);
           Pebble.onConnect(function(event) { 
-            alert('Pebble CONNECTED');
             Pebble.onAppMessageReceived(function(uzi){
               var obj = JSON.parse(uzi.detail.data);
               var trans = uzi.detail.transaction;
               alert('ID:\n\n'+trans);
               alert(obj[0].key);
             });
+            alert('Pebble CONNECTED');
           });
         },
-        function(event) { alert('Pebble HIBA'); }
+        hiba
       );
 
 
