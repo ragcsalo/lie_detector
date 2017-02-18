@@ -208,18 +208,24 @@
         voice_yes = new Media("sounds/voice_yes.mp3");
         voice_no = new Media("sounds/voice_no.mp3");
 
+        setTimeout(pebble_indit,2000);
+      }
+
+      function pebble_indit() {
+        alert(Pebble);
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
             Pebble.onConnect(function(event) { 
               Pebble.launchApp(siker,hiba);
-              Pebble.onAppMessageReceived(valtas);
+              Pebble.onAppMessageReceived(function(message){
+                valtas();
+              });
             });
           }, hiba
         );
 
-
       }
-
+ 
       function set_language(mire) {
         $.getScript('languages/'+mire+'.js', function() {
           
