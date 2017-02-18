@@ -212,20 +212,11 @@
         function() {
           alert('UUID beállítva');
           Pebble.launchApp(siker,hiba);
-          alert('elindult?');
+          alert('elindult...');
           Pebble.onConnect(function(event) { 
             alert(event);
             Pebble.onAppMessageReceived(function(message){
-                alert(kulcsok(message));
-                if (message.1) {
-                  alert('1');
-                }
-                if (message.2) {
-                  alert('2');
-                }
-                if (message.3) {
-                  alert('3');
-                }
+              alert(kulcsok(message));
             });
           });
         }, hiba
