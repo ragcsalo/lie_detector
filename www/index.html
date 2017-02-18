@@ -209,12 +209,7 @@
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
           Pebble.onConnect(function(event) { 
-            //alert(event.name+' connected,\nstarting app...');
-            Pebble.launchApp(siker,hiba);
-            Pebble.onAppMessageReceived(function(message){
-              var uzi = kulcsok(message)[0];
-              alert('message from '+message.watch+':\n\n'+uzi);
-            });
+            alert(event.name+' connected');
           });
         },
         hiba

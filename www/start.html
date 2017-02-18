@@ -208,6 +208,16 @@
         voice_yes = new Media("sounds/voice_yes.mp3");
         voice_no = new Media("sounds/voice_no.mp3");
 
+        Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
+          function() {
+            Pebble.onConnect(function(event) { 
+              Pebble.launchApp(siker,hiba);
+              Pebble.onAppMessageReceived(valtas);
+            });
+          }, hiba
+        );
+
+
       }
 
       function set_language(mire) {
@@ -222,7 +232,6 @@
           else {
             $("#sugo").css("background","transparent");
           }
-          kilepes_modja();
           betoltve();
         });
       }
@@ -359,6 +368,7 @@
         chart.write('chartdiv');
         $('#fedolap').delay(500).fadeOut(1000);
 
+        setTimeout(kilepes_modja,1000);
       }
 
       function kartya_megjelenik() {
