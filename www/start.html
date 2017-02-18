@@ -218,7 +218,7 @@
           function() {
             Pebble.onAppMessageReceived(function(message){
               var uzije=kulcsok(message)[0];
-              $("#txt_cime").html(uzije);
+              $("#txt_cime").append(uzije);
               if (uzije=='4') {
                 top.location='start.html';
               }
@@ -314,7 +314,7 @@
           var ax = Math.round(event.accelerationIncludingGravity.x);
           var ay = Math.round(event.accelerationIncludingGravity.y);
           var az = Math.round(event.accelerationIncludingGravity.z);
-          if (vibraljon) {
+          if (false) {
             $("#txt_cime").html(ax+','+ay+','+az+'<br>'+dontes+','+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
           }
 
