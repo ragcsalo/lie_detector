@@ -210,15 +210,16 @@
         function() {
           alert('UUID beállítva');
           Pebble.launchApp(
-            function() { alert('elindult'); },
+            function() {
+              Pebble.onConnect(function(event) { 
+                alert(event.name+' connected');
+                Pebble.onAppMessageReceived(function(message){
+                    alert(kulcsok(message));
+                });
+              });
+            },
             function(event) { alert('nem indul'); }
           );
-          Pebble.onConnect(function(event) { 
-            alert(event.name);
-            Pebble.onAppMessageReceived(function(message){
-                alert(kulcsok(message));
-            });
-          });
         },
         function(event) { alert('Pebble HIBA'); }
       );
