@@ -206,21 +206,29 @@
 
       $('body').fadeIn();
 
+      //alert(Pebble);
 
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
-          Pebble.launchApp(siker,hiba);
+          alert('UUID beállítva');
+          Pebble.launchApp(
+            function() { alert('elindult'); },
+            function(event) { alert('nem indul'); }
+          );
+          alert('elindult?');
           Pebble.onConnect(function(event) { 
-            Pebble.onAppMessageReceived(function(uzi){
-              var obj = JSON.parse(uzi.detail.data);
-              var trans = uzi.detail.transaction;
-              alert('ID:\n\n'+trans);
-              alert(obj[0].key);
-            });
             alert('Pebble CONNECTED');
+            Pebble.onAppMessageReceived(function(message){
+                alert(kulcsok(message));
+                alert(kulcsok(message.detail));
+                var obj = JSON.parse(message.detail.data);
+                var trans = message.detail.transaction;
+                alert('ID:\n\n'+trans);
+                alert(obj[0].key);
+            });
           });
         },
-        hiba
+        function(event) { alert('Pebble HIBA'); }
       );
 
 
