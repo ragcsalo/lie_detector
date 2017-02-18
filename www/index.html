@@ -418,7 +418,7 @@
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
           Pebble.onConnect(function(event) { 
-            $("#pebble_info").html(event.name);
+            $("#txt_pebblevel").html(event.name+' '+txt_kapcsolodva);
             Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
           }, function(){ pebblevel=true; pebblevel_kapcs(); });
         }, function(){ pebblevel=true; pebblevel_kapcs(); }
@@ -573,7 +573,7 @@
       if (pebblevel) {
         pebblevel=false;
         Pebble.killApp(siker,hiba);
-        $("#pebble_info").html('');
+        $("#txt_pebblevel").html(txt_pebblevel);
       }
       else {
         pebblevel=true;
@@ -1118,7 +1118,7 @@
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_pebblevel">Switch with Pebble watch<div id="pebble_info" style="font-size:9pt; color:#6a6a6a;"></div></td>
+            <td class="bal" id="txt_pebblevel">Switch with Pebble watch</td>
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="pebblevel" onTouchstart="pebblevel_kapcs()">
                 <div class="toggle-handle"></div>
