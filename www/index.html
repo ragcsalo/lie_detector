@@ -33,7 +33,7 @@
       }
 
       .jobb {
-        width: 140px;
+        width: 120px;
         padding:10px;
         text-align:right;
       }
@@ -83,13 +83,13 @@
 
   <script type="text/javascript" charset="utf-8">
 
-    var storage, zoomin, autostart, hangerogomb, dontes, csakigaz, kilepett, pixelek=5;
+    var storage, zoomin, autostart, pebblevel, dontes, csakigaz, kilepett, pixelek=5;
     var valasztott_account="", account_vasarolt="", account_elofizetve="";
     var email_kivalasztva, emailplugin;
     var mennyivan=0, account_tomb=[];
     var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
     var valasztott_nyelv, ertekelte, account_saved=0;
-    var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, pebblevel, kileng_kesik=3, folyamat;
+    var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, kileng_kesik=3, folyamat;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -133,6 +133,12 @@
       if (!dontes) {
         dontes=false;
         storage.setItem("dontes",dontes);
+      }
+
+      pebblevel = logikai(storage.getItem("pebblevel"));
+      if (!pebblevel) {
+        pebblevel=false;
+        storage.setItem("pebblevel",pebblevel);
       }
 
       pixelek = storage.getItem("pixelek");
@@ -210,7 +216,7 @@
 
 
     function kuld() {
-      Pebble.sendAppMessage({0: "Hello! :-)"},siker);
+      //Pebble.sendAppMessage({0: "Hello! :-)"},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
@@ -254,8 +260,7 @@
       set_txt_lang('mainset');
       set_txt_lang('proset');
       set_txt_lang('autostart');
-      set_txt_lang('pebble');
-      set_txt_lang('hangerogomb');
+      set_txt_lang('pebblevel');
       set_txt_lang('dontes');
       set_txt_lang('kileng_kesik');
       set_txt_lang('folyamat');
@@ -409,6 +414,16 @@
       top.location='index.html';
     }
 
+    function pebble_indit() {
+      Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
+        function() {
+          Pebble.onConnect(function(event) { 
+            $("#pebble_info").html(event.name);
+            Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
+          }, function(){ pebblevel=true; pebblevel_kapcs(); });
+        }, function(){ pebblevel=true; pebblevel_kapcs(); }
+      );
+    }
 
     // BEÁLLÍTÁSOK:
     //================================================================
@@ -421,6 +436,9 @@
       }
       if (dontes) {
         $("#dontes").addClass('active');
+      }
+      if (pebblevel) {
+        $("#pebblevel").addClass('active');
       }
       if (csakigaz) {
         $("#csakigaz").addClass('active');
@@ -531,10 +549,6 @@
       if (window.DeviceMotionEvent) {
         if (dontes) {
           dontes=false;
-          csakigaz=false;
-          storage.setItem("csakigaz",csakigaz);
-          $("#csakigaz").removeClass('active');
-          document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
         }
         else {
           dontes=true;
@@ -542,15 +556,36 @@
       }
       else {
         dontes=false;
-        csakigaz=false;
-        storage.setItem("csakigaz",csakigaz);
-        $("#csakigaz").removeClass('active');
-        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
         $("#dontes").removeClass('active');
         document.getElementById('dontgomb').style.webkitTransform = 'translate3d(0,0,0)';
         uzenet_ablak(txt_motion1,txt_motion2);
       }
       storage.setItem("dontes",dontes);
+      if (!dontes && !pebblevel) {
+        csakigaz=false;
+        storage.setItem("csakigaz",csakigaz);
+        $("#csakigaz").removeClass('active');
+        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
+      }
+    }
+
+    function pebblevel_kapcs() {
+      if (pebblevel) {
+        pebblevel=false;
+        Pebble.killApp(siker,hiba);
+        $("#pebble_info").html('');
+      }
+      else {
+        pebblevel=true;
+        pebble_indit();
+      }
+      storage.setItem("pebblevel",pebblevel);
+      if (!dontes && !pebblevel) {
+        csakigaz=false;
+        storage.setItem("csakigaz",csakigaz);
+        $("#csakigaz").removeClass('active');
+        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
+      }
     }
 
     function csakigaz_kapcs() {
@@ -1079,6 +1114,14 @@
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="dontes" onTouchstart="dontes_kapcs()">
                 <div class="toggle-handle" id="dontgomb"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_pebblevel">Switch with Pebble watch<div id="pebble_info" style="font-size:9pt; color:#6a6a6a;"></div></td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="pebblevel" onTouchstart="pebblevel_kapcs()">
+                <div class="toggle-handle"></div>
               </div>
             </td>
           </tr>

@@ -70,7 +70,7 @@
       var utolso1=2, utolso2=2, kartyalesz=false, smileyt=false;
       var leforditva=false, felforditva=false, fej_megjelenve=false;
       var kartya_szin="", kartya_ertek="", pixelek=5, pixelpos='bottom left';
-      var igazhang='', hazughang='', vibraljon=false, hangerogomb=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
+      var igazhang='', hazughang='', vibraljon=false, pebblevel=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
       var dontozito, fejzito, cimzito;
       var effect_yes, effect_no, sound_yes, sound_no, voice_yes, voice_no;
 
@@ -102,16 +102,16 @@
           storage.setItem("csakigaz",false);
         }
 
-        hangerogomb = logikai(storage.getItem("hangerogomb"));
-        if (hangerogomb==null) {
-          hangerogomb=false;
-          storage.setItem("hangerogomb",false);
-        }
-
         dontes = logikai(storage.getItem("dontes"));
         if (dontes==null) {
           dontes=false;
           storage.setItem("dontes",false);
+        }
+
+        pebblevel = logikai(storage.getItem("pebblevel"));
+        if (!pebblevel) {
+          pebblevel=false;
+          storage.setItem("pebblevel",false);
         }
 
         kileng_kesik = storage.getItem("kileng_kesik");
@@ -206,27 +206,28 @@
         voice_yes = new Media("sounds/voice_yes.mp3");
         voice_no = new Media("sounds/voice_no.mp3");
 
-        setTimeout(extra_indit,2000);
+        ujgiroszkop_figyel();
+
+        if (pebblevel) {
+          setTimeout(pebble_indit,500);
+        }
       }
 
-      function extra_indit() {
+      function pebble_indit() {
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
-            Pebble.onConnect(function(event) { 
-              //alert(event.name+' connected');
-              Pebble.launchApp(function() {
-                Pebble.onAppMessageReceived(function(message){
-                  var uzije=kulcsok(message)[0];
-                  $("#txt_cime").html(uzije);
-                  if (uzije=='1' || uzije=='2') {
-                    valtas();
-                  }
-                });
-              } ,hiba);
+            Pebble.onAppMessageReceived(function(message){
+              var uzije=kulcsok(message)[0];
+              $("#txt_cime").html(uzije);
+              if (uzije=='4') {
+                top.location='start.html';
+              }
+              else {
+                valtas();
+              }
             });
           }, hiba
         );
-        ujgiroszkop_figyel();
       }
  
       function kulcsok(obj){
@@ -413,7 +414,7 @@
       }
 
       function valtas() {
-        if (hangerogomb || dontes) {
+        if (pebblevel || dontes) {
           kovetkezo = 1-kovetkezo;
           utolso2 = utolso1;
           utolso1 = kovetkezo;
