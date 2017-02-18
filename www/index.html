@@ -214,7 +214,7 @@
           Pebble.launchApp(siker,hiba);
           alert('elindult...');
           Pebble.onConnect(function(event) { 
-            alert(event);
+            alert(kulcsok(event));
             Pebble.onAppMessageReceived(function(message){
               alert(kulcsok(message));
             });
