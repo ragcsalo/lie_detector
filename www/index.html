@@ -206,18 +206,35 @@
 
       $('body').fadeIn();
 
-      alert(Pebble);
+      //alert(Pebble);
 
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
+          alert('UUID beállítva');
           Pebble.launchApp(
             function() { alert('elindult'); },
             function(event) { alert('nem indul'); }
           );
+          alert('elindult?');
+          Pebble.onConnect(function(event) { 
+            alert('Pebble CONNECTED');
+            Pebble.onAppMessageReceived(function(message){
+                alert(message);
+            });
+          });
         },
-        function(event) { alert('Pebble HIBA'); });
-      }
+        function(event) { alert('Pebble HIBA'); }
+      );
 
+
+    }
+
+
+    function kuld() {
+      Pebble.sendAppMessage({0: "hello"},
+       function() { alert('message sent'); }
+      );
+    }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
 
@@ -617,7 +634,7 @@
         <div style="height:15px"></div>
         <div id="txt_alcim" style="font-size:14pt; font-style:italic"></div>
         <div style="height:30px"></div>
-        <img src="img/ikon.png" width="150" border="0" alt="" style="box-shadow: 0px 0px 10px #373737">
+        <img src="img/ikon.png" width="150" border="0" alt="" style="box-shadow: 0px 0px 10px #373737" onTouchstart="kuld();">
         <div style="height:30px"></div>
         <button id="txt_start_magic" class="btn btn-positive" style="font-size:20pt; padding:10px; font-weight:bold" onTouchstart="inditas();">START MAGIC TRICK</button>
         <div style="height:60px"></div>
