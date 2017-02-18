@@ -215,11 +215,11 @@
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
             Pebble.onConnect(function(event) { 
-              alert(event.name+' connected');
+              //alert(event.name+' connected');
               Pebble.launchApp(function() {
-                alert('App started');
+                //alert('App started');
                 Pebble.onAppMessageReceived(function(message){
-                  alert(kulcsok(message));
+                  //alert(kulcsok(message));
                   valtas();
                 });
               } ,hiba);
