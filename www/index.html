@@ -220,11 +220,9 @@
             alert('Pebble CONNECTED');
             Pebble.onAppMessageReceived(function(message){
                 alert(kulcsok(message));
-                alert(kulcsok(message.detail));
-                var obj = JSON.parse(message.detail.data);
-                var trans = message.detail.transaction;
-                alert('ID:\n\n'+trans);
-                alert(obj[0].key);
+                alert(kulcsok(message.watch));
+                alert(message.1);
+                alert(message[0]);
             });
           });
         },
