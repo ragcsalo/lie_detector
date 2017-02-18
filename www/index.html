@@ -212,7 +212,9 @@
             //alert(event.name+' connected,\nstarting app...');
             Pebble.launchApp(siker,hiba);
             Pebble.onAppMessageReceived(function(message){
-              alert(kulcsok(message));
+              if (message.1) {
+                alert('1');
+              }
             });
           });
         },
