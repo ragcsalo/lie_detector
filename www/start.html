@@ -212,20 +212,34 @@
       }
 
       function pebble_indit() {
-        alert(Pebble);
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
             Pebble.onConnect(function(event) { 
-              Pebble.launchApp(siker,hiba);
-              Pebble.onAppMessageReceived(function(message){
-                valtas();
-              });
+              alert(event.name+' connected');
+              Pebble.launchApp(function() {
+                alert('App started');
+                Pebble.onAppMessageReceived(function(message){
+                  alert(kulcsok(message));
+                  valtas();
+                });
+              } ,hiba);
             });
           }, hiba
         );
 
       }
  
+      function kulcsok(obj){
+        var keys = [];
+        for(var key in obj){
+          if (obj.hasOwnProperty(key)) {
+            keys.push(key);
+          }
+        }
+        return keys;
+      }
+
+
       function set_language(mire) {
         $.getScript('languages/'+mire+'.js', function() {
           
