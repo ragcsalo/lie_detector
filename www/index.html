@@ -209,13 +209,10 @@
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
           Pebble.onConnect(function(event) { 
-            alert(event.name+' connected,\nstarting app...');
-            Pebble.launchApp(
-              siker,
-              hiba
-            );
+            //alert(event.name+' connected,\nstarting app...');
+            Pebble.launchApp(siker,hiba);
             Pebble.onAppMessageReceived(function(message){
-                alert(kulcsok(message));
+              alert(kulcsok(message));
             });
           });
         },
@@ -227,9 +224,7 @@
 
 
     function kuld() {
-      Pebble.sendAppMessage({0: "hello"},
-       function() { alert('message sent'); }
-      );
+      Pebble.sendAppMessage({0: "hello"},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
