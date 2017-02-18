@@ -199,8 +199,6 @@
           preventDefaultEvents:false
         });
         
-        ujgiroszkop_figyel();
-
         effect_yes = new Media("sounds/effect_yes.mp3");
         effect_no = new Media("sounds/effect_no.mp3");
         sound_yes = new Media("sounds/sound_yes.mp3");
@@ -208,22 +206,19 @@
         voice_yes = new Media("sounds/voice_yes.mp3");
         voice_no = new Media("sounds/voice_no.mp3");
 
-        setTimeout(pebble_indit,2000);
+        setTimeout(extra_indit,2000);
       }
 
-      function pebble_indit() {
+      function extra_indit() {
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
             Pebble.onConnect(function(event) { 
               //alert(event.name+' connected');
               Pebble.launchApp(function() {
-                //alert('App started');
                 Pebble.onAppMessageReceived(function(message){
                   var uzije=kulcsok(message)[0];
-                  if (uzije!='1' && uzije!='2') {
-                    alert(uzije);
-                  }
-                  else {
+                  $("#txt_cime").html(uzije);
+                  if (uzije=='1' || uzije=='2') {
                     valtas();
                   }
                 });
@@ -231,7 +226,7 @@
             });
           }, hiba
         );
-
+        ujgiroszkop_figyel();
       }
  
       function kulcsok(obj){
