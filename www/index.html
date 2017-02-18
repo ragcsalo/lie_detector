@@ -210,15 +210,21 @@
 
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
-          alert('UUID beállítva');
+          //alert('UUID beállítva');
           Pebble.launchApp(siker,hiba);
-          alert('elindult?');
+          //alert('elindult?');
           Pebble.onConnect(function(event) { 
-            alert('Pebble CONNECTED');
+            alert(kulcsok(event));
             Pebble.onAppMessageReceived(function(message){
-                alert(kulcsok(message));
-                if (message.watch) {
-                  alert(message.watch);
+                //alert(kulcsok(message));
+                if (message.1) {
+                  alert('1');
+                }
+                if (message.2) {
+                  alert('2');
+                }
+                if (message.3) {
+                  alert('3');
                 }
             });
           });
