@@ -71,7 +71,7 @@
       var leforditva=false, felforditva=false, fej_megjelenve=false;
       var kartya_szin="", kartya_ertek="", pixelek=5, pixelpos='bottom left';
       var igazhang='', hazughang='', vibraljon=false, pebblevel=false, dontes=false, csakigaz=false, kileng_kesik=5, folyamat=false;
-      var dontozito, fejzito, cimzito;
+      var fejzito, cimzito, valthatzito, valthat=true;
       var effect_yes, effect_no, sound_yes, sound_no, voice_yes, voice_no;
 
       var valasztott_nyelv, hogylephetki, kilep_szamol=0;
@@ -218,7 +218,7 @@
           function() {
             Pebble.onAppMessageReceived(function(message){
               var uzije=kulcsok(message)[0];
-              $("#txt_cime").append(uzije);
+              //$("#txt_cime").append(uzije);
               if (uzije=='4') {
                 top.location='start.html';
               }
@@ -314,9 +314,8 @@
           var ax = Math.round(event.accelerationIncludingGravity.x);
           var ay = Math.round(event.accelerationIncludingGravity.y);
           var az = Math.round(event.accelerationIncludingGravity.z);
-          if (false) {
-            $("#txt_cime").html(ax+','+ay+','+az+'<br>'+dontes+','+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
-          }
+
+          //$("#txt_cime").html(ax+','+ay+','+az+'<br>'+dontes+','+fordul+','+leforditva+'<br>'+megallitva+','+megdontve);
 
           if (kartyalesz && !felforditva) {
             if (az>4) {
@@ -414,7 +413,7 @@
       }
 
       function valtas() {
-        if (pebblevel || dontes) {
+        if ((pebblevel || dontes) && valthat) {
           kovetkezo = 1-kovetkezo;
           utolso2 = utolso1;
           utolso1 = kovetkezo;
@@ -424,21 +423,14 @@
           else {
             $("#sugo").css("background","transparent");
           }
+          valthat=false;
+          valthatzito = setTimeout(ujra_valthat,1000);
         }
       }
 
-      function valtas_igaz() {
-        kovetkezo = 1;
-        utolso2 = utolso1;
-        utolso1 = kovetkezo;
-        $("#sugo").css("background","transparent");
-      }
-
-      function valtas_hazug() {
-        kovetkezo = 0;
-        utolso2 = utolso1;
-        utolso1 = kovetkezo;
-        $("#sugo").css("background","black");
+      function ujra_valthat() {
+        clearTimeout(valthatzito);
+        valthat=true;
       }
 
       function igazmondo() {

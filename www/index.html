@@ -90,6 +90,7 @@
     var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
     var valasztott_nyelv, ertekelte, account_saved=0;
     var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, kileng_kesik=3, folyamat;
+    var pebble_gomb=0, pebble_nev;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -216,7 +217,7 @@
 
 
     function kuld() {
-      //Pebble.sendAppMessage({0: "Hello! :-)"},siker);
+      Pebble.sendAppMessage({0: "Lie Detector"},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
@@ -417,9 +418,16 @@
     function pebble_indit() {
       Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
         function() {
-          Pebble.onConnect(function(event) { 
-            $("#txt_pebblevel").html(event.name+' '+txt_kapcsolodva);
-            Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
+          Pebble.onConnect(function(event) {
+            pebble_nev = event.name;
+            $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+            Pebble.launchApp( function() {
+              Pebble.onAppMessageReceived(function(message){
+                pebble_gomb+=1;
+                $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
+              });
+            }
+            , function(){ pebblevel=true; pebblevel_kapcs(); });
           }, function(){ pebblevel=true; pebblevel_kapcs(); });
         }, function(){ pebblevel=true; pebblevel_kapcs(); }
       );
