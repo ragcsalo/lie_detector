@@ -2,11 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Mental Painter (Magic Trick)</title>
+    <title>Lie Detector (Magic Trick)</title>
 
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
     <link href="css/ratchet.css" rel="stylesheet">
     <link href="css/purchased.css" rel="stylesheet">
@@ -34,18 +32,8 @@
         -webkit-tap-highlight-color:rgba(0,0,0,0);
       }
 
-      button, .nemkijelol {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-tap-highlight-color:rgba(0,0,0,0);
-      }
-
       .jobb {
-        width: 140px;
+        width: 120px;
         padding:10px;
         text-align:right;
       }
@@ -57,6 +45,25 @@
 
       .toggle {
         float:right;
+      }
+
+      .lie {
+        color:#d40000;
+        font-size: 15pt;
+      }
+
+      .true {
+        color:mediumseagreen;
+        font-size: 15pt;
+      }
+
+      .piroslap {
+        color: #d40000;
+        font-size: 15pt;
+      }
+
+      .lap {
+        font-size: 15pt;
       }
 
       .content {
@@ -71,21 +78,15 @@
         text-align: center !important;
       }
 
+
     </style>
 
   <script type="text/javascript" charset="utf-8">
 
-    var app_azonosito = "mental_painter";
-
-    var storage, zoomin, autostart, kilepett;
-    var valasztott_account="", account_vasarolt="", account_elofizetve="";
-    var mennyivan=0, account_tomb=[];
-    var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
+    var storage, zoomin, autostart, pebblevel, dontes, csakigaz, kilepett, pixelek=5;
     var valasztott_nyelv;
-    var keverve, kesleltet, szinezodik, modszer, account_saved, folyamatos, androidwear, sotetebb;
-
-    var watch_handle, wear_kuldeni='', wearzito;
-
+    var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, kileng_kesik=3, folyamat;
+    var pebble_gomb=0, pebble_nev='Pebble', pebble_indult=false;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -108,52 +109,88 @@
         storage.setItem("autostart",false);
       }
 
-
       //==================== egyedi opciók ===================================================================================
-
-      folyamatos = storage.getItem("folyamatos");
-      if (folyamatos==null) {
-        folyamatos=true;
-        storage.setItem("folyamatos",true);
+      
+      folyamat = storage.getItem("folyamat");
+      if (folyamat==null) {
+        folyamat=true;
+        storage.setItem("folyamat",true);
       }
       else {
-        folyamatos = logikai(folyamatos);
+        folyamat = logikai(storage.getItem("folyamat"));
       }
 
-      keverve = storage.getItem("keverve");
-      if (keverve==null) {
-        keverve=true;
-        storage.setItem("keverve",true);
+      csakigaz = logikai(storage.getItem("csakigaz"));
+      if (!csakigaz) {
+        csakigaz=false;
+        storage.setItem("csakigaz",false);
+      }
+
+      dontes = logikai(storage.getItem("dontes"));
+      if (!dontes) {
+        dontes=false;
+        storage.setItem("dontes",dontes);
+      }
+
+      pebblevel = logikai(storage.getItem("pebblevel"));
+      if (!pebblevel) {
+        pebblevel=false;
+        storage.setItem("pebblevel",pebblevel);
+      }
+
+      pixelek = storage.getItem("pixelek");
+      if (pixelek==null) {
+        pixelek=5;
+        storage.setItem("pixelek",pixelek);
       }
       else {
-        keverve = logikai(keverve);
+        pixelek = parseInt(pixelek);
       }
 
-      kesleltet = storage.getItem("kesleltet");
-      if (!kesleltet) {
-        kesleltet=15;
-        storage.setItem("kesleltet",kesleltet);
+      kileng_kesik = storage.getItem("kileng_kesik");
+      if (kileng_kesik==null) {
+        kileng_kesik=3;
+        storage.setItem("kileng_kesik",kileng_kesik);
       }
       else {
-        kesleltet = parseInt(kesleltet);
+        kileng_kesik = parseInt(kileng_kesik);
       }
 
-      szinezodik = storage.getItem("szinezodik");
-      if (!szinezodik) {
-        szinezodik=10;
-        storage.setItem("szinezodik",szinezodik);
+      smileyt = logikai(storage.getItem("smileyt"));
+      if (!smileyt) {
+        smileyt=false;
+        storage.setItem("smileyt",false);
       }
-      else {
-        szinezodik = parseInt(szinezodik);
-      }
-
-      modszer = storage.getItem("modszer");
-      if (!modszer) {
-        modszer='erintes';
-        storage.setItem("modszer",modszer);
+      
+      kartyalesz = logikai(storage.getItem("kartyalesz"));
+      if (!kartyalesz) {
+        kartyalesz=false;
+        storage.setItem("kartyalesz",false);
       }
 
+      vibraljon = logikai(storage.getItem("vibraljon"));
+      if (!vibraljon) {
+        vibraljon=false;
+        storage.setItem("vibraljon",false);
+      }
 
+      igazhang = storage.getItem("igazhang");
+      if (igazhang==null) {
+        igazhang='';
+        storage.setItem("igazhang",igazhang);
+      }
+
+      hazughang = storage.getItem("hazughang");
+      if (hazughang==null) {
+        hazughang='';
+        storage.setItem("hazughang",hazughang);
+      }
+
+      pixelpos = storage.getItem("pixelpos");
+      if (pixelpos==null) {
+        pixelpos='bottom left';
+        storage.setItem("pixelpos",pixelpos);
+      }
       //==================== egyedi opciók vége ===============================================================================
 
       valasztott_nyelv = storage.getItem("valasztott_nyelv");
@@ -164,15 +201,18 @@
         set_language(valasztott_nyelv);
       }
 
-
-      setbetolt();
-
       $(".locked").hide();
       $(".subscribed").show();
 
+      setbetolt();
       $('body').fadeIn();
 
 
+    }
+
+
+    function kuld() {
+      Pebble.sendAppMessage({0: "Lie Detector"},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
@@ -208,57 +248,73 @@
     }
 
     function txt_beallit() {
+      set_txt_lang('cime1');
       set_txt_lang('cime2');
       set_txt_lang('alcim');
       set_txt_lang('start_magic');
       set_txt_lang('other_apps');
       set_txt_lang('mainset');
+      set_txt_lang('proset');
       set_txt_lang('autostart');
-      set_txt_lang('folyamatos');
-      set_txt_lang('keverve');
-      set_txt_lang('kesleltet');
-      set_txt_lang('szinezodik');
+      set_txt_lang('pebblevel');
+      set_txt_lang('dontes');
+      set_txt_lang('kileng_kesik');
+      set_txt_lang('folyamat');
+      set_txt_lang('csakigaz');
+      set_txt_lang('pixel');
+      set_txt_lang('corner');
+      set_txt_lang('topleft');
+      set_txt_lang('topright');
+      set_txt_lang('bottomleft');
+      set_txt_lang('bottomright');
+      set_txt_lang('sound_truth');
+      set_txt_lang('sound_lie');
+      set_txt_lang('silent1');
+      set_txt_lang('silent2');
+      set_txt_lang('yes_effect1');
+      set_txt_lang('yes_effect2');
+      set_txt_lang('yes_voice');
+      set_txt_lang('no_effect1');
+      set_txt_lang('no_effect2');
+      set_txt_lang('no_voice');
+      set_txt_lang('vibraljon');
+      set_txt_lang('smileyt');
+      set_txt_lang('kartyalesz');
+
+      set_txt_lang('setacc');
+      set_txt_lang('newacc');
       set_txt_lang('setscr');
       set_txt_lang('setzoom');
       set_txt_lang('reset');
       set_txt_lang('lang');
-      set_txt_lang('modszer');
-      set_txt_lang('startnow');
-      set_txt_lang('erintes');
       set_txt_lang('leir1');
       set_txt_lang('leir2');
-      set_txt_lang('leir30');
       set_txt_lang('leir3');
       set_txt_lang('leir4');
       set_txt_lang('leir6');
       set_txt_lang('leir7');
+      set_txt_lang('leir8');
       set_txt_lang('leir1_html');
       set_txt_lang('leir2_html');
-      set_txt_lang('leir30_html');
       set_txt_lang('leir3_html');
       set_txt_lang('leir4_html');
       set_txt_lang('leir61_html');
       set_txt_lang('leir62_html');
       set_txt_lang('leir7_html');
+      set_txt_lang('leir8_html');
 
-      set_txt_lang('setacc');
-      set_txt_lang('newacc');
       set_txt_lang('valasszon1');
       set_txt_lang('valasszon2');
-
-      set_txt_lang('andwear');
-      set_txt_lang('androidwear');
-      set_txt_lang('sotetebb');
 
       set_menu_lang('menu1');
       set_menu_lang('menu2');
       set_menu_lang('menu21');
       set_menu_lang('menu22');
-      set_menu_lang('menu230');
       set_menu_lang('menu23');
       set_menu_lang('menu24');
       set_menu_lang('menu26');
       set_menu_lang('menu27');
+      set_menu_lang('menu28');
       set_menu_lang('menu5');
       set_menu_lang('masodperc');
 
@@ -296,12 +352,12 @@
     function menupont(ezt) {
       $('#div_nyitolap').hide();
       $('#div_leiras').hide();
-      $('#div_leiras_p1').hide();
-      $('#div_leiras_p2').hide();
-      $('#div_leiras_p30').hide();
-      $('#div_leiras_p3').hide();
-      $('#div_leiras_p4').hide();
+      $('#div_leiras_basic_settings').hide();
+      $('#div_leiras_basic').hide();
       $('#div_leiras_credit').hide();
+      $('#div_leiras_secret').hide();
+      $('#div_leiras_using').hide();
+      $('#div_leiras_pro_settings').hide();
       $('#div_beallitas').hide();
       $('#div_'+ezt).show();
       if (ezt=='beallitas') {
@@ -309,6 +365,21 @@
       }
     }
 
+
+    function angoldatum(datum) {
+      var ujdatum = new Date(datum);
+      return ujdatum.toLocaleDateString();
+    }
+
+    function kulcsok(obj){
+       var keys = [];
+       for(var key in obj){
+         if (obj.hasOwnProperty(key)) {
+           keys.push(key);
+         }
+       }
+       return keys;
+    }
 
     function logikai(mibol) {
       if (mibol==true || mibol=="true") {
@@ -339,23 +410,95 @@
       top.location='index.html';
     }
 
+    function pebble_indit() {
+      if (!pebble_indult) {
+        Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
+          function() {
+            Pebble.onConnect(function(event) {
+                pebble_nev = event.name;
+                $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+                Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
+              }, function(){ pebblevel=true; pebblevel_kapcs(); }
+            );
+            Pebble.onAppMessageReceived(function(message) {
+              pebble_gomb+=1;
+              $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
+            });
+            pebble_indult=true;
+          },
+          function(){ pebblevel=true; pebblevel_kapcs(); }
+        );
+      }
+    }
+
 
     // BEÁLLÍTÁSOK:
     //================================================================
     function setbetolt() {
+      if (folyamat) {
+        $("#folyamat").addClass('active');
+      }
       if (autostart) {
         $("#autostart").addClass('active');
       }
-      if (folyamatos) {
-        $("#folyamatos").addClass('active');
+      if (dontes) {
+        $("#dontes").addClass('active');
       }
-      if (keverve) {
-        $("#keverve").addClass('active');
+      if (pebblevel) {
+        $("#pebblevel").addClass('active');
+        if (pebble_indult) {
+          $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+        }
+        else {
+          pebble_indit();
+        }
       }
-      $("#kesleltet").val(kesleltet);
-      $("#szinezodik").val(szinezodik);
-      $('#modszer').val(modszer);
+      if (csakigaz) {
+        $("#csakigaz").addClass('active');
+      }
+      if (kartyalesz) {
+        $("#kartyalesz").addClass('active');
+      }
+      if (vibraljon) {
+        $("#vibraljon").addClass('active');
+      }
+      if (smileyt) {
+        $("#smileyt").addClass('active');
+      }
+      
+      $("#pixelsize").val(pixelek);
+      $("#kileng_kesik").val(kileng_kesik);
+
+      $('#pixelpos').val(pixelpos);
+      $('#igazhang').val(igazhang);
+      $('#hazughang').val(hazughang);
     }
+
+    function ujpixel(mire) {
+      storage.setItem("pixelek",mire);
+      pixelek=mire;
+    }
+
+    function ujkileng(mire) {
+      storage.setItem("kileng_kesik",mire);
+      kileng_kesik=mire;
+    }
+
+    function ujpixelpos(mire) {
+      storage.setItem("pixelpos",mire);
+      pixelpos=mire;
+    }
+
+    function ujigazhang(mire) {
+      storage.setItem("igazhang",mire);
+      igazhang=mire;
+    }
+
+    function ujhazughang(mire) {
+      storage.setItem("hazughang",mire);
+      hazughang=mire;
+    }
+
 
     function autostart_kapcs() {
       if (autostart) {
@@ -364,45 +507,119 @@
       else {
         autostart=true;
       }
-      storage.setItem("autostart",autostart.toString());
+      storage.setItem("autostart",autostart);
     }
 
-    function folyamatos_kapcs() {
-      if (folyamatos) {
-        folyamatos=false;
+    function folyamat_kapcs() {
+      if (folyamat) {
+        folyamat=false;
       }
       else {
-        folyamatos=true;
+        folyamat=true;
       }
-      storage.setItem("folyamatos",folyamatos.toString());
+      storage.setItem("folyamat",folyamat);
     }
 
-    function keverve_kapcs() {
-      if (keverve) {
-        keverve=false;
+    function vibraljon_kapcs() {
+      if (vibraljon) {
+        vibraljon=false;
       }
       else {
-        keverve=true;
+        vibraljon=true;
       }
-      storage.setItem("keverve",keverve.toString());
+      storage.setItem("vibraljon",vibraljon);
     }
 
-    function uj_modszer(mire) {
-      storage.setItem("modszer",mire);
-      modszer=mire;
+    function smileyt_kapcs() {
+      if (smileyt) {
+        smileyt=false;
+      }
+      else {
+        smileyt=true;
+      }
+      storage.setItem("smileyt",smileyt);
     }
 
-    function kesleltet_beallit(mire) {
-      storage.setItem("kesleltet",mire);
-      kesleltet=mire;
+    function kartyalesz_kapcs() {
+      if (window.DeviceMotionEvent) {
+        if (kartyalesz) {
+          kartyalesz=false;
+        }
+        else {
+          kartyalesz=true;
+        }
+      }
+      else {
+        kartyalesz=false;
+        $("#kartyalesz").removeClass('active');
+        document.getElementById('kartyagomb').style.webkitTransform = 'translate3d(0,0,0)';
+        uzenet_ablak(txt_motion1,txt_motion2);
+      }
+      storage.setItem("kartyalesz",kartyalesz);
     }
 
-    function szinezodik_beallit(mire) {
-      storage.setItem("szinezodik",mire);
-      szinezodik=mire;
+    function dontes_kapcs() {
+      if (window.DeviceMotionEvent) {
+        if (dontes) {
+          dontes=false;
+        }
+        else {
+          dontes=true;
+        }
+      }
+      else {
+        dontes=false;
+        $("#dontes").removeClass('active');
+        document.getElementById('dontgomb').style.webkitTransform = 'translate3d(0,0,0)';
+        uzenet_ablak(txt_motion1,txt_motion2);
+      }
+      storage.setItem("dontes",dontes);
+      if (!dontes && !pebblevel) {
+        csakigaz=false;
+        storage.setItem("csakigaz",csakigaz);
+        $("#csakigaz").removeClass('active');
+        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
+      }
     }
 
+    function pebblevel_kapcs() {
+      if (pebblevel) {
+        pebblevel=false;
+        Pebble.killApp(siker,hiba);
+        $("#txt_pebblevel").html(txt_pebblevel);
+      }
+      else {
+        pebblevel=true;
+        if (!pebble_indult) {
+          Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
+          $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+        }
+        else {
+          pebble_indit();
+        }
+      }
+      storage.setItem("pebblevel",pebblevel);
+      if (!dontes && !pebblevel) {
+        csakigaz=false;
+        storage.setItem("csakigaz",csakigaz);
+        $("#csakigaz").removeClass('active');
+        document.getElementById('igazgomb').style.webkitTransform = 'translate3d(0,0,0)';
+      }
+    }
 
+    function csakigaz_kapcs() {
+      if (csakigaz) {
+        csakigaz=false;
+      }
+      else {
+        csakigaz=true;
+        dontes=true;
+        $("#dontes").addClass('active');
+        document.getElementById('dontgomb').style.webkitTransform = 'translate3d(44px,0,0)';
+        storage.setItem("dontes",dontes);
+      }
+      storage.setItem("csakigaz",csakigaz);
+    }
 
     //============ BEÁLLÍTÁSOK VÉGE ====================================================
 
@@ -444,13 +661,13 @@
       <div class="content center" style="text-align:center; width:100%; height:100%">
 
         <div style="height:40px"></div>
-        <div id="txt_cime2" style="font-size:28pt; font-family:enigma">Mental Painter</div>
+        <div id="txt_cime2" style="font-size:28pt; font-family:enigma">Lie Detector</div>
         <div style="height:15px"></div>
         <div id="txt_alcim" style="font-size:14pt; font-style:italic"></div>
         <div style="height:30px"></div>
-        <img src="img/ikon.png" width="150" border="0" alt="" style="border-radius: 20px; box-shadow: 0px 0px 10px #373737">
+        <img src="img/ikon.png" width="150" border="0" alt="" style="box-shadow: 0px 0px 10px #373737">
         <div style="height:30px"></div>
-        <button id="txt_start_magic" class="btn btn-positive" style="font-size:20pt; padding:10px; font-weight:bold" onTouchstart="inditas()">START MAGIC TRICK</button>
+        <button id="txt_start_magic" class="btn btn-positive" style="font-size:20pt; padding:10px; font-weight:bold" onTouchstart="inditas();">START MAGIC TRICK</button>
         <div style="height:60px"></div>
       </div>
 
@@ -486,45 +703,47 @@
 
       <div class="content" style="font-size:16pt; width:100%; height:100%">
 
+        <div style="height:30px"></div>
+
         <ul class="table-view">
           <li class="table-view-cell media">
-            <a class="navigate-right" onclick="menupont('leiras_p1')">
-              <div class="media-body" id="txt_leir1" style="font-size:14pt; height:50px; line-height:50px">
-                The routine
-              </div>
-            </a>
-          </li>
-          <li class="table-view-cell media">
-            <a class="navigate-right" onclick="menupont('leiras_p2')">
-              <div class="media-body" id="txt_leir2" style="font-size:14pt; height:50px; line-height:50px">
+            <a class="navigate-right" onclick="menupont('leiras_secret')">
+              <div class="media-body" id="txt_leir1" style="font-size:12pt; height:40px; line-height:40px">
                 The secret method
               </div>
             </a>
           </li>
           <li class="table-view-cell media">
-            <a class="navigate-right" onclick="menupont('leiras_p30')">
-              <div class="media-body" id="txt_leir30" style="font-size:14pt; height:50px; line-height:50px">
-                The words
+            <a class="navigate-right" onclick="menupont('leiras_using')">
+              <div class="media-body" id="txt_leir2" style="font-size:12pt; height:40px; line-height:40px">
+                Using the Lie Detector
               </div>
             </a>
           </li>
           <li class="table-view-cell media">
-            <a class="navigate-right" onclick="menupont('leiras_p3')">
-              <div class="media-body" id="txt_leir3" style="font-size:14pt; height:50px; line-height:50px">
-                Printing the cards
+            <a class="navigate-right" onclick="menupont('leiras_basic')">
+              <div class="media-body" id="txt_leir3" style="font-size:12pt; height:40px; line-height:40px">
+                Basic routine with cards
               </div>
             </a>
           </li>
           <li class="table-view-cell media">
-            <a class="navigate-right" onclick="menupont('leiras_p4')">
-              <div class="media-body" id="txt_leir4" style="font-size:14pt; height:50px; line-height:50px">
-                How to perform the trick
+            <a class="navigate-right" onclick="menupont('leiras_basic_settings')">
+              <div class="media-body" id="txt_leir7" style="font-size:12pt; height:40px; line-height:40px">
+                Basic settings
+              </div>
+            </a>
+          </li>
+          <li class="table-view-cell media">
+            <a class="navigate-right" onclick="menupont('leiras_pro_settings')">
+              <div class="media-body" id="txt_leir8" style="font-size:12pt; height:40px; line-height:40px">
+                PRO settings
               </div>
             </a>
           </li>
           <li class="table-view-cell media">
             <a class="navigate-right" onclick="menupont('leiras_credit')">
-              <div class="media-body" id="txt_leir6" style="font-size:14pt; height:50px; line-height:50px">
+              <div class="media-body" id="txt_leir6" style="font-size:12pt; height:40px; line-height:40px">
                 Credits and thanks
               </div>
             </a>
@@ -539,8 +758,8 @@
     <!-- *********************************************************************************************************** -->
 
 
-    <!-- ==========================================   LEÍRÁS: THE ROUTINE  ============================================== -->
-    <div id="div_leiras_p1" style="display:none">
+    <!-- ==========================================   LEÍRÁS: SECRET  ============================================== -->
+    <div id="div_leiras_secret" style="display:none">
       <nav class="bar bar-tab">
         <a class="tab-item" onTouchstart="menupont('nyitolap')">
           <span class="icon icon-home2"></span>
@@ -558,8 +777,8 @@
 
       <header class="bar bar-nav">
         <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras')"></a>
-        <h1 class="title menu21">The routine</h1>
-        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_p2')"></a>
+        <h1 class="title menu21">The secret method</h1>
+        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_using')"></a>
       </header>
 
       <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
@@ -567,8 +786,8 @@
         <span id="txt_leir1_html"></span>
         <br><br><br>
         <div style="text-align:center; width:100%">
-          <a onTouchstart="menupont('leiras_p2')">
-            <button class="btn btn-primary menu22" style="font-size:16pt; padding:10px">The secret method</button>
+          <a onTouchstart="menupont('leiras_using')">
+            <button class="btn btn-primary menu22" style="font-size:16pt; padding:10px">Using the lie detector</button>
           </a>
         </div>
         <br><br><br><br>
@@ -577,8 +796,8 @@
     <!-- *********************************************************************************************************** -->
 
 
-    <!-- ==========================================   LEÍRÁS: SECRET METHOD  =============================================== -->
-    <div id="div_leiras_p2" style="display:none">
+    <!-- ==========================================   LEÍRÁS: USING  =============================================== -->
+    <div id="div_leiras_using" style="display:none">
       <nav class="bar bar-tab">
         <a class="tab-item" onTouchstart="menupont('nyitolap')">
           <span class="icon icon-home2"></span>
@@ -595,9 +814,9 @@
       </nav>
 
       <header class="bar bar-nav">
-        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_p1')"></a>
-        <h1 class="title menu22">The secret method</h1>
-        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_p30')"></a>
+        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_secret')"></a>
+        <h1 class="title menu22">Using the lie detector</h1>
+        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_basic')"></a>
       </header>
 
       <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
@@ -605,8 +824,8 @@
         <span id="txt_leir2_html"></span>
         <br><br><br>
         <div style="text-align:center; width:100%">
-          <a onTouchstart="menupont('leiras_p30')">
-            <button class="btn btn-primary menu230" style="font-size:16pt; padding:10px">The words</button>
+          <a onTouchstart="menupont('leiras_basic')">
+            <button class="btn btn-primary menu23" style="font-size:16pt; padding:10px">Basic routine with cards</button>
           </a>
         </div>
         <br><br><br><br>
@@ -615,8 +834,8 @@
     <!-- *********************************************************************************************************** -->
 
 
-    <!-- ==========================================   LEÍRÁS: THE WORDS  =============================================== -->
-    <div id="div_leiras_p30" style="display:none">
+    <!-- ==========================================   LEÍRÁS: BASIC  =============================================== -->
+    <div id="div_leiras_basic" style="display:none">
       <nav class="bar bar-tab">
         <a class="tab-item" onTouchstart="menupont('nyitolap')">
           <span class="icon icon-home2"></span>
@@ -633,47 +852,9 @@
       </nav>
 
       <header class="bar bar-nav">
-        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_p2')"></a>
-        <h1 class="title menu230">Printing the cards</h1>
-        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_p3')"></a>
-      </header>
-
-      <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
-        <div style="height:40px"></div>
-        <span id="txt_leir30_html"></span>
-        <br><br><br>
-        <div style="text-align:center; width:100%">
-          <a onTouchstart="menupont('leiras_p3')">
-            <button class="btn btn-primary menu23" style="font-size:16pt; padding:10px">Printing the cards</button>
-          </a>
-        </div>
-        <br><br><br><br>
-      </div>
-    </div>
-    <!-- *********************************************************************************************************** -->
-
-
-    <!-- ==========================================   LEÍRÁS: PRINTING CARDS  =============================================== -->
-    <div id="div_leiras_p3" style="display:none">
-      <nav class="bar bar-tab">
-        <a class="tab-item" onTouchstart="menupont('nyitolap')">
-          <span class="icon icon-home2"></span>
-          <span class="tab-label menu1">Home</span>
-        </a>
-        <a class="tab-item active" onTouchstart="menupont('leiras')">
-          <span class="icon icon-book"></span>
-          <span class="tab-label menu2">User guide</span>
-        </a>
-        <a class="tab-item" onTouchstart="menupont('beallitas')">
-          <span class="icon icon-equalizer"></span>
-          <span class="tab-label menu5">Settings</span>
-        </a>
-      </nav>
-
-      <header class="bar bar-nav">
-        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_p30')"></a>
-        <h1 class="title menu23">Printing the cards</h1>
-        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_p4')"></a>
+        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_using')"></a>
+        <h1 class="title menu23">Basic routine with cards</h1>
+        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_basic_settings')"></a>
       </header>
 
       <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
@@ -681,8 +862,8 @@
         <span id="txt_leir3_html"></span>
         <br><br><br>
         <div style="text-align:center; width:100%">
-          <a onTouchstart="menupont('leiras_p4')">
-            <button class="btn btn-primary menu24" style="font-size:16pt; padding:10px">How to perform the trick</button>
+          <a onTouchstart="menupont('leiras_basic_settings')">
+            <button class="btn btn-primary menu27" style="font-size:16pt; padding:10px">Controlling the result</button>
           </a>
         </div>
         <br><br><br><br>
@@ -691,8 +872,8 @@
     <!-- *********************************************************************************************************** -->
 
 
-    <!-- ==========================================   LEÍRÁS: HOW TO PERFORM  =============================================== -->
-    <div id="div_leiras_p4" style="display:none">
+    <!-- ==========================================   LEÍRÁS: BASIC SETTINGS  =============================================== -->
+    <div id="div_leiras_basic_settings" style="display:none">
       <nav class="bar bar-tab">
         <a class="tab-item" onTouchstart="menupont('nyitolap')">
           <span class="icon icon-home2"></span>
@@ -709,14 +890,52 @@
       </nav>
 
       <header class="bar bar-nav">
-        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_p3')"></a>
-        <h1 class="title menu24">How to perform the trick</h1>
-        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_credit')"></a>
+        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_basic')"></a>
+        <h1 class="title menu27">Basic settings</h1>
+        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_pro_settings')"></a>
       </header>
 
       <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
         <div style="height:40px"></div>
-        <span id="txt_leir4_html"></span>
+        <span id="txt_leir7_html"></span>
+        <br><br><br>
+        <div style="text-align:center; width:100%">
+          <a onTouchstart="menupont('leiras_pro_settings')">
+            <button class="btn btn-primary menu28" style="font-size:16pt; padding:10px">PRO settings</button>
+          </a>
+        </div>
+        <br><br><br><br>
+      </div>
+    </div>
+    <!-- *********************************************************************************************************** -->
+
+
+    <!-- ==========================================   LEÍRÁS: PRO SETTINGS  =============================================== -->
+    <div id="div_leiras_pro_settings" style="display:none">
+      <nav class="bar bar-tab">
+        <a class="tab-item" onTouchstart="menupont('nyitolap')">
+          <span class="icon icon-home2"></span>
+          <span class="tab-label menu1">Home</span>
+        </a>
+        <a class="tab-item active" onTouchstart="menupont('leiras')">
+          <span class="icon icon-book"></span>
+          <span class="tab-label menu2">User guide</span>
+        </a>
+        <a class="tab-item" onTouchstart="menupont('beallitas')">
+          <span class="icon icon-equalizer"></span>
+          <span class="tab-label menu5">Settings</span>
+        </a>
+      </nav>
+
+      <header class="bar bar-nav">
+        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_basic_settings')"></a>
+        <h1 class="title menu28">PRO settings</h1>
+        <a class="icon icon-right-nav pull-right" onTouchstart="menupont('leiras_zoom')"></a>
+      </header>
+
+      <div class="content" style="text-align:justify; font-size:12pt; width:100%; height:100%; padding:20px">
+        <div style="height:40px"></div>
+        <span id="txt_leir8_html"></span>
         <br><br><br>
         <div style="text-align:center; width:100%">
           <a onTouchstart="menupont('leiras_credit')">
@@ -747,7 +966,7 @@
       </nav>
 
       <header class="bar bar-nav">
-        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_zoom')"></a>
+        <a class="icon icon-left-nav pull-left" onTouchstart="menupont('leiras_pro_settings')"></a>
         <h1 class="title menu26">Credits and thanks</h1>
       </header>
 
@@ -756,13 +975,12 @@
         <div style="text-align:center">
           <span id="txt_leir61_html"></span>
         </div>
-        <br><br>
+        <br>
         <span id="txt_leir62_html"></span>
         <br><br><br><br><br>
       </div>
     </div>
     <!-- *********************************************************************************************************** -->
-
 
 
 
@@ -793,6 +1011,7 @@
       <div class="content center" style="text-align:center; width:100%; height:100%">
 
         <br><br>
+
         <h2 id="txt_mainset">Basic settings</h2>
 
         <div style="height:20px"></div>
@@ -807,26 +1026,20 @@
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_folyamatos">Continuous scrolling</td>
+            <td class="bal" id="txt_folyamat">Show progress</td>
             <td class="jobb" align="right">
-              <div class="toggle pull-right" id="folyamatos" onTouchstart="folyamatos_kapcs()">
+              <div class="toggle pull-right" id="folyamat" onTouchstart="folyamat_kapcs()">
                 <div class="toggle-handle"></div>
               </div>
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_keverve">Shuffle images</td>
+            <td class="bal" id="txt_kileng_kesik">Duration of scanning</td>
             <td class="jobb" align="right">
-              <div class="toggle pull-right" id="keverve" onTouchstart="keverve_kapcs()">
-                <div class="toggle-handle"></div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="bal" id="txt_kesleltet">Delay before painting</td>
-            <td class="jobb" align="right">
-              <span class="masodperc" style="float:right; line-height:35px; vertical-align:middle; margin-left:5px">sec</span>
-              <select id="kesleltet" style="float:right; font-size:14pt; text-align:center; color:black; margin:0px; height:35px; vertical-align:middle; width:50%" onChange="kesleltet_beallit(this.value)">
+              <span class="masodperc" style="float:right; line-height:35px; vertical-align:middle; margin-left:5px; width:30px; text-align:left">sec</span>
+              <select id="kileng_kesik" style="float:right; font-size:14pt; text-align:center; color:black; margin:0px; height:35px; vertical-align:middle; width:50%" onChange="ujkileng(this.value)">
+                <option value="1">1</option>
+                <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
@@ -835,24 +1048,16 @@
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
               </select>
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_szinezodik">Duration of painting</td>
+            <td class="bal" id="txt_pixel">Secret pixel size</td>
             <td class="jobb" align="right">
-              <span class="masodperc" style="float:right; line-height:35px; vertical-align:middle; margin-left:5px">sec</span>
-              <select id="szinezodik" style="float:right; font-size:14pt; text-align:center; color:black; margin:0px; height:35px; vertical-align:middle; width:50%" onChange="szinezodik_beallit(this.value)">
+              <span style="float:right; line-height:35px; vertical-align:middle; margin-left:5px; width:30px; text-align:left">px</span>
+              <select id="pixelsize" style="float:right; font-size:14pt; text-align:center; color:black; margin:0px; height:35px; vertical-align:middle; width:50%" onChange="ujpixel(this.value)">
+                <option value="1">1</option>
+                <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
@@ -861,29 +1066,102 @@
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
               </select>
             </td>
           </tr>
           <tr>
-            <td class="bal also" id="txt_modszer">Secret method</td>
-            <td class="jobb also" align="right">
-              <select id="modszer" style="display:block; margin:0px; height:30px" onChange="uj_modszer(this.value)">
-                <option value="startnow" id="txt_startnow">START NOW</option>
-                <option value="erintes" id="txt_erintes">touch image</option>
-                </select>
+            <td class="bal" id="txt_corner">Secret pixel corner</td>
+            <td class="jobb" align="right">
+              <select id="pixelpos" style="display:block; margin:0px; height:30px" onChange="ujpixelpos(this.value)">
+                <option value="top left" id="txt_topleft">top left</option>
+                <option value="top right" id="txt_topright">top right</option>
+                <option value="bottom left" id="txt_bottomleft">bottom left</option>
+                <option value="bottom right" id="txt_bottomright">bottom right</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_sound_truth">Sound for TRUTH</td>
+            <td class="jobb" align="right">
+              <select id="igazhang" style="display:block; margin:0px; height:30px" onChange="ujigazhang(this.value)">
+                <option value="" id="txt_silent1">silent</option>
+                <option value="effect_yes" id="txt_yes_effect1">Effect #1</option>
+                <option value="sound_yes" id="txt_yes_effect2">Effect #2</option>
+                <option value="voice_yes" id="txt_yes_voice">Voice (YES)</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_sound_lie">Sound for LIE</td>
+            <td class="jobb" align="right">
+              <select id="hazughang" style="display:block; margin:0px; height:30px" onChange="ujhazughang(this.value)">
+                <option value="" id="txt_silent2">silent</option>
+                <option value="effect_no" id="txt_no_effect1">Effect #1</option>
+                <option value="sound_no" id="txt_no_effect2">Effect #2</option>
+                <option value="voice_no" id="txt_no_voice">Voice (NO)</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_vibraljon">Vibrate on LIE</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="vibraljon" onTouchstart="vibraljon_kapcs()">
+                <div class="toggle-handle"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_smileyt">Show smiley faces</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="smileyt" onTouchstart="smileyt_kapcs()">
+                <div class="toggle-handle"></div>
+              </div>
             </td>
           </tr>
         </table>
+
+        <div style="height:20px"></div>
+        <hr>
+        <div style="height:20px"></div>
+
+        <h2 id="txt_proset">PRO settings</h2>
+        <div style="height:20px"></div>
+
+        <table style="width:100%; margin-right:10px">
+          <tr>
+            <td class="bal" id="txt_dontes">Tilt device to switch</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="dontes" onTouchstart="dontes_kapcs()">
+                <div class="toggle-handle" id="dontgomb"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_pebblevel" onTouchstart="kuld();">Switch with Pebble watch</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="pebblevel" onTouchstart="pebblevel_kapcs()">
+                <div class="toggle-handle"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_csakigaz">Always TRUE by default</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="csakigaz" onTouchstart="csakigaz_kapcs()">
+                <div class="toggle-handle" id="igazgomb"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="bal" id="txt_kartyalesz">Appearing card at end</td>
+            <td class="jobb" align="right">
+              <div class="toggle pull-right" id="kartyalesz" onTouchstart="kartyalesz_kapcs()">
+                <div class="toggle-handle" id="kartyagomb"></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+
 
         <div style="height:20px"></div>
         <hr>
@@ -904,6 +1182,7 @@
 
     </div>
     <!-- *********************************************************************************************************** -->
+
 
   </body>
 </html>
