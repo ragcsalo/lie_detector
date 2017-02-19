@@ -59,6 +59,7 @@ txt_kileng_kesik = 'Szkennelés hossza';
 txt_folyamat = 'Folyamatjelző';
 txt_dontes = 'Váltás a készülék megdöntésével';
 txt_pebblevel = 'Váltás Pebble órával';
+txt_kapcsolodik = 'Keresés...';
 txt_kapcsolodva = 'kapcsolódva';
 txt_csakigaz = 'Alapesetben mindig IGAZ';
 txt_pixel = 'Fekete pötty mérete';
