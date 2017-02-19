@@ -90,7 +90,7 @@
     var megvasarolva, elofizetve, elofiz_ervenyes, dev_uuid, app_ara;
     var valasztott_nyelv, ertekelte, account_saved=0;
     var igazhang='', hazughang='', vibraljon, smileyt, kartyalesz, pixelpos, kileng_kesik=3, folyamat;
-    var pebble_gomb=0, pebble_nev;
+    var pebble_gomb=0, pebble_nev, pebble_indult=false;
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -205,13 +205,12 @@
         set_language(valasztott_nyelv);
       }
 
-
-      setbetolt();
-
       $(".locked").hide();
       $(".subscribed").show();
 
+      setbetolt();
       $('body').fadeIn();
+
 
     }
 
@@ -445,7 +444,12 @@
       }
       if (pebblevel) {
         $("#pebblevel").addClass('active');
-        pebble_indit();
+        if (pebble_indult) {
+          $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+        }
+        else {
+          pebble_indit();
+        }
       }
       if (csakigaz) {
         $("#csakigaz").addClass('active');
