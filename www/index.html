@@ -437,6 +437,7 @@
         Pebble.setAppUUID("7b4e607b-ecbd-4b91-a489-3a69926ec555", 
           function() {
             Pebble.onConnect(function(event) {
+                clearTimeout(pebblezito);
                 pebble_nev = event.name;
                 $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
                 Pebble.onAppMessageReceived(function(message) {
@@ -451,6 +452,13 @@
           function(){ pebblevel=true; pebblevel_kapcs(); }
         );
       }
+    }
+
+    function pebble_nemkapcs() {
+      clearTimeout(pebblezito);
+      $("#txt_pebblevel").html(txt_pebblevel);
+      pebblevel=true;  // most igaz, de aztán kikapcsolom...
+      pebblevel_kapcs();
     }
 
 
@@ -619,6 +627,8 @@
         else {
           $("#txt_pebblevel").html(txt_kapcsolodik);
           pebble_indit();
+          clearTimeout(pebblezito);
+          pebblezito = setTimeout(pebble_nemkapcs,10000);
         }
       }
       storage.setItem("pebblevel",pebblevel);
