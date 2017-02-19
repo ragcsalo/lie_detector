@@ -217,7 +217,7 @@
 
 
     function kuld() {
-      Pebble.sendAppMessage({0: "Lie Detector"},siker);
+      Pebble.sendAppMessage({0: "Lie Detector #"+pebble_gomb},siker);
     }
 
     // ÁLTALÁNOS FUNKCIÓK ======================================================================
@@ -421,14 +421,12 @@
           Pebble.onConnect(function(event) {
             pebble_nev = event.name;
             $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
-            Pebble.launchApp( function() {
-              Pebble.onAppMessageReceived(function(message){
-                pebble_gomb+=1;
-                $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
-              });
-            }
-            , function(){ pebblevel=true; pebblevel_kapcs(); });
+            Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
           }, function(){ pebblevel=true; pebblevel_kapcs(); });
+          Pebble.onAppMessageReceived(function(message){
+            pebble_gomb+=1;
+            $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
+          });
         }, function(){ pebblevel=true; pebblevel_kapcs(); }
       );
     }
@@ -447,6 +445,7 @@
       }
       if (pebblevel) {
         $("#pebblevel").addClass('active');
+        pebble_indit();
       }
       if (csakigaz) {
         $("#csakigaz").addClass('active');
@@ -654,7 +653,7 @@
         <div style="height:15px"></div>
         <div id="txt_alcim" style="font-size:14pt; font-style:italic"></div>
         <div style="height:30px"></div>
-        <img src="img/ikon.png" width="150" border="0" alt="" style="box-shadow: 0px 0px 10px #373737" onTouchstart="kuld();">
+        <img src="img/ikon.png" width="150" border="0" alt="" style="box-shadow: 0px 0px 10px #373737">
         <div style="height:30px"></div>
         <button id="txt_start_magic" class="btn btn-positive" style="font-size:20pt; padding:10px; font-weight:bold" onTouchstart="inditas();">START MAGIC TRICK</button>
         <div style="height:60px"></div>
@@ -1126,7 +1125,7 @@
             </td>
           </tr>
           <tr>
-            <td class="bal" id="txt_pebblevel">Switch with Pebble watch</td>
+            <td class="bal" id="txt_pebblevel" onTouchstart="kuld();">Switch with Pebble watch</td>
             <td class="jobb" align="right">
               <div class="toggle pull-right" id="pebblevel" onTouchstart="pebblevel_kapcs()">
                 <div class="toggle-handle"></div>

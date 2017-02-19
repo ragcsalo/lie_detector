@@ -173,7 +173,6 @@
         megvasarolva = 1;
         reggelve=true;
 
-        valthat=false;
         mukodes = "random";
 
         valasztott_nyelv = storage.getItem("valasztott_nyelv");
@@ -218,7 +217,7 @@
           function() {
             Pebble.onAppMessageReceived(function(message){
               var uzije=kulcsok(message)[0];
-              //$("#txt_cime").append(uzije);
+              //$("#txt_cime").html(uzije);
               if (uzije=='4') {
                 top.location='start.html';
               }
