@@ -35,7 +35,6 @@
     <preference name="auto-hide-splash-screen"    value="true" />           <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
     <preference name="deployment-target"		  value="7.1.2" />          <!-- ios: target platform -->
 	<preference name="StatusBarOverlaysWebView"   value="false" />
-	<preference name="Suppress3DTouch" value="true" />
 
     <!-- Plugins -->
 
