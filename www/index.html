@@ -25,6 +25,28 @@
         src: url('fonts/enigma.ttf');
       }
 
+      .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-callout: none;
+      }
+
+      *:not(input):not(textarea) {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-callout: none;
+      }
+
+      html {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-callout: none;
+      }
+
+
       img {
         -webkit-user-select: none;
         user-select: none;
@@ -417,14 +439,14 @@
             Pebble.onConnect(function(event) {
                 pebble_nev = event.name;
                 $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
+                Pebble.onAppMessageReceived(function(message) {
+                  pebble_gomb+=1;
+                  $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
+                });
+                pebble_indult=true;
                 Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
               }, function(){ pebblevel=true; pebblevel_kapcs(); }
             );
-            Pebble.onAppMessageReceived(function(message) {
-              pebble_gomb+=1;
-              $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva+' #'+pebble_gomb);
-            });
-            pebble_indult=true;
           },
           function(){ pebblevel=true; pebblevel_kapcs(); }
         );

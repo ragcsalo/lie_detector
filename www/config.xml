@@ -52,13 +52,13 @@
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-screen-orientation" />
 
+    <!-- Third party plugins -->
+    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <plugin name="cordova-plugin-ble-central">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Scan for Bluetooth Low Energy Peripherals" />
     </plugin>
-
-    <!-- Third party plugins -->
-    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
 	<plugin spec="https://github.com/tgardner/cordova-pebble.git" source="git" />
+    <gap:plugin name="cordova-plugin-ios-longpress-fix" source="npm" />
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
