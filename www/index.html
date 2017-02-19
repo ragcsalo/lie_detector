@@ -612,11 +612,12 @@
       }
       else {
         pebblevel=true;
-        if (!pebble_indult) {
+        if (pebble_indult) {
           Pebble.launchApp(siker, function(){ pebblevel=true; pebblevel_kapcs(); });
           $("#txt_pebblevel").html(pebble_nev+' '+txt_kapcsolodva);
         }
         else {
+          $("#txt_pebblevel").html(txt_kapcsolodik);
           pebble_indit();
         }
       }
