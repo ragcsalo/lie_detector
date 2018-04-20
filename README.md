@@ -2,11 +2,22 @@
 
 ## private magic app
 
-`ez egy kódrészlet`
+soron belül `ez egy kódrészlet` jól
 
-```kód blokk```
-```kód blokk```
-```kód blokk```
+```kód blokk
+ami több soros
+de nem györgy
+```
+
+```kód blokk
+ami több soros
+de nem györgy
+```
+
+```kód blokk
+ami több soros
+de nem györgy
+```
 
 akkor **ez vastaggal** vagy *dőlttel* lesz?
 
