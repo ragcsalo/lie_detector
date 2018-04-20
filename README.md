@@ -4,17 +4,19 @@
 
 soron belül `ez egy kódrészlet` jól
 
-```kód blokk
-ami több soros
-de nem györgy
+```javascript
+var p = 23;
+alert("hahaha");
 ```
 
-```kód blokk
-ami több soros
-de nem györgy
+```php
+$a = 23;
+$b = 11;
+echo $a + $b;
 ```
 
-```kód blokk
+```
+egyéb kód blokk
 ami több soros
 de nem györgy
 ```
